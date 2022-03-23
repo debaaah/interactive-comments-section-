@@ -10,6 +10,10 @@ body{
 .main{
     margin-bottom: 157px;
 }
+.blueBold{
+    color: $blue;
+    font-weight: bold;
+}
 .comment-box{
     display: flex;
     background-color: white;
@@ -193,6 +197,7 @@ textarea{
         padding: 10px;
     }
     .modal-dialog{
+        min-width: 290px;
         top: 50%;
         left: 50%;
         -webkit-transform: translate(-50%, -50%) !important;
@@ -208,6 +213,7 @@ textarea{
             width: 150px;
             text-transform: uppercase;
             border-radius: 5px;
+            height: auto;
         }
         [type='button']{
             background-color: #6b707d;
@@ -254,5 +260,13 @@ textarea{
         position: absolute;
         right: 18px;
         bottom: 15px;
+    }
+    .modal{
+        .modal-footer{
+            .btn{
+                font-size: 15px;
+                width: auto;
+            }
+        }
     }
 }

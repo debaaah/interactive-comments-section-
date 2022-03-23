@@ -1,9 +1,10 @@
+import { type } from '@testing-library/user-event/dist/type'
 import React, {useState, useRef} from 'react'
 import './sass/style.scss'
 //const data = require('./data.json')
 
 const Main = () => {
-    const [data, setData] = useState(require('./data.json'))
+    const [data, setData] = useState(localStorage.getItem('data')? JSON.parse(localStorage.getItem('data')): require('./data.json'))
     //returns an obj that is id of comment: 'not displayed', 
     //it makes the display of the form under every comment none
     const [displayState, setDisplayState] = useState(
@@ -89,9 +90,9 @@ const Main = () => {
         const {content, createdAt, id, replies, score, user} = item
         return(
             <div id={id}>
-                {comment(content, createdAt, id, score, user)}
+                {comment(content, createdAt, id, score, user, false, null)}
                 <div  className='reply-box'>
-                    {ifReply(replies, index)}
+                    {ifReply(replies, user.username, index)}
                 </div>
                 {inputBox(id, user.username, index)}
             </div>
@@ -99,7 +100,7 @@ const Main = () => {
     }
 
      //handles the actual comment box and calls other functions for diffrent parts of the comment
-     const comment = (content, createdAt, id, score, user) => {
+     const comment = (content, createdAt, id, score, user, x, parentUsername) => {
          //const newCreatedAt = createdAt 
          if (id > 4){
              createdAt = dateConverter(( Date.now() - createdAt)/1000)
@@ -123,18 +124,21 @@ const Main = () => {
                             </div>
                             {sentWho(user.username, id, content)} 
                         </div>
-                        {sentWho2(user.username, content, id)}
+                        {sentWho2(user.username, content, id, x, parentUsername)}
                     </div>
                 </div>
         )
     }
+    //
+    const blueMarker = (content) => {
 
+    }
     //checks if the comment has replies, if yes, it calls a function that handles/display the reply
-    const ifReply = (replies, parentIndex) => {
+    const ifReply = (replies, parentUsername, parentIndex) => {
         if (replies){
         return(
                 <div>
-                    {replies.map((item, index) => (reply(item, parentIndex)))}
+                    {replies.map((item, index) => (reply(item, parentUsername, parentIndex)))}
                 </div>
         )
         }
@@ -220,29 +224,39 @@ const Main = () => {
     }
 
       //checks if the comment was made by the current user, if yes, makes the comment editable else, post the comment
-      const sentWho2 = ( username, content, id ) => {
+      const sentWho2 = ( username, content, id, x, parentUsername ) => {
+        let newContent = content
+        let repliedUsername = ''
         const style = {
             visibility: 'hidden', 
             height: '30px',
             width: '100%',
             display: 'block'
         }
+
+        if (x){      
+            repliedUsername = '@' + parentUsername + ' '
+            if (content.substring(1, (parentUsername.length+1)) === parentUsername){
+               newContent = content.substring(parentUsername.length+1, content.length+1)
+            }
+        }
         if (data.currentUser.username === username){
             return(
                 <div className='comment'>
-                    <div className={divClassName[id]}>{content}<div style={style}></div></div>
-                    <form className={displayStateEdit[id]} onSubmit={(e) => {
+                    <div className={divClassName[id]}><span className="blueBold">{repliedUsername}</span>{newContent}<div style={style}></div></div>
+                    <form style={{marginBottom: '80px'}} className={displayStateEdit[id]} onSubmit={(e) => {
                         e.preventDefault()
                         editComment(id)
                     }}>
                         <textarea  rows='4' cols='80' type='text' value={editContent} onChange={settingEditContent}></textarea>
                         <input type='submit' value='update'/>
+                        <div ></div>
                     </form>
                 </div>
             )              
         }else{
             return(
-                <div className='comment'>{content}<div style={style}></div></div>
+                <div className={divClassName[id]}><span className="blueBold">{repliedUsername}</span>{newContent}<div style={style}></div></div>
             )
         }
     }
@@ -267,12 +281,12 @@ const Main = () => {
     }
    
      //same as full comment function, the only diffrence is that it doesnt have a reply box
-     const reply = (item, parentIndex) => {
+     const reply = (item, parentUsername, parentIndex) => {
         const {content, createdAt, id, replies, score, user} = item
         return(
             <div id={id}>
-                {comment(content, createdAt, id, score, user)}
-                {ifReply(replies)}
+                {comment(content, createdAt, id, score, user, true, parentUsername)}
+                {ifReply(replies, user.username)}
                 {inputBox(id, user.username, parentIndex)}
             </div>
         )
@@ -397,6 +411,7 @@ const Main = () => {
           return holder + ' weeks ago' 
         }
       }
+    localStorage.setItem('data', JSON.stringify(data))
     return(
         <div className='main'>
            {data.comments.map((item, index) => (fullComment(item, index)))}
@@ -418,8 +433,8 @@ const Main = () => {
                         <div className="modal-body">
                             <h4>Delete comment</h4>
                             <div>
-                                Are you sure you want to delete <br/>this comment? this
-                                will remove the comment <br/>and can't be undone.
+                                Are you sure you want to delete this comment? this
+                                will remove the comment and can't be undone.
                             </div>
                         </div>
                         <div className="modal-footer">
