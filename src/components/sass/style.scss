@@ -228,6 +228,9 @@ textarea{
     }
 }
 @media screen and (max-width: 768px) {
+    .main {
+        margin-bottom: 191px;
+    }
     .reply-box{
         margin: 0 0 0 10px;
         padding-left: 0px;
@@ -266,7 +269,7 @@ textarea{
         display: block;
     }
     .currentUser-form{
-        max-height: 200px;
+         max-height: 150px;
     }
     .currentUserReply-form, .currentUser-form{
         position: relative;
@@ -282,6 +285,7 @@ textarea{
         }
         textarea{
             margin: 0;
+            height: 70px;
         }
         input{
             position: absolute;
