@@ -237,6 +237,7 @@ textarea{
     }
     .score-box{
         writing-mode: horizontal-tb;
+        -webkit-text-orientation: mixed;
         text-orientation: mixed;
         width: max-content;
         margin-right: 0px;
