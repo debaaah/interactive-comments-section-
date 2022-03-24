@@ -129,10 +129,6 @@ const Main = () => {
                 </div>
         )
     }
-    //
-    const blueMarker = (content) => {
-
-    }
     //checks if the comment has replies, if yes, it calls a function that handles/display the reply
     const ifReply = (replies, parentUsername, parentIndex) => {
         if (replies){
@@ -154,7 +150,8 @@ const Main = () => {
             }}>
                 <span  ><img src={data.currentUser.image.png} alt='your profile picture'/></span>
                 <textarea  rows='3' cols='80' type='text'  onChange={settingInputValue} value={inputValue} placeholder={commentorUsername}></textarea>
-                <input type='submit'/>
+                <div></div>
+                <input type='submit' value='reply'/>
             </form>
         )
     }
@@ -414,7 +411,7 @@ const Main = () => {
     localStorage.setItem('data', JSON.stringify(data))
     return(
         <div className='main'>
-           {data.comments.map((item, index) => (fullComment(item, index)))}
+               <div className='content-container'>{data.comments.map((item, index) => (fullComment(item, index)))}</div> 
                <div className='currentUser-form-box'> 
                 <form className='currentUser-form' onSubmit={(e) => {
                     e.preventDefault()
@@ -422,7 +419,8 @@ const Main = () => {
                 }}>
                     <span ><img src={data.currentUser.image.png} alt='your profile picture'/></span>
                     <textarea rows='4' cols='80' onChange={settingcurrentUserInputValue} value={currentUserInputValue} placeholder='Add a comment'></textarea>
-                    <input type='submit'/>
+                    <div></div>
+                    <input type='submit' value='send'/>
                 </form>
 
             </div>
