@@ -29,7 +29,9 @@ body{
 }
 .score-box{
     background-color: #f4f5fb;
+    -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
+    -webkit-text-orientation: upright;
     text-orientation: upright;
     border-radius: 5px;
     padding: 0 2px 2px; 
@@ -236,6 +238,7 @@ textarea{
         padding-left: 0px;
     }
     .score-box{
+        -webkit-writing-mode: horizontal-tb;
         writing-mode: horizontal-tb;
         -webkit-text-orientation: mixed;
         text-orientation: mixed;
