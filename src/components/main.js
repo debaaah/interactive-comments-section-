@@ -109,9 +109,9 @@ const Main = () => {
             <div className='comment-box'>
                     <div className='score-box-box'>
                         <div className='score-box'>
-                            <span onClick={() => editScore('plus', id)} className='plus'><svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/></svg></span>
-                            <span className='score'>{score}</span>
-                            <span onClick={() => editScore('minus', id)} className='minus'><svg width="11" height="3" xmlns="http://www.w3.org/2000/svg"><path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/></svg></span>
+                            <div onClick={() => editScore('plus', id)} className='plus'><svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" fill="#C5C6EF"/></svg></div>
+                            <div className='score'>{score}</div>
+                            <div onClick={() => editScore('minus', id)} className='minus'><svg width="11" height="3" xmlns="http://www.w3.org/2000/svg"><path d="M9.256 2.66c.204 0 .38-.056.53-.167.148-.11.222-.243.222-.396V.722c0-.152-.074-.284-.223-.395a.859.859 0 0 0-.53-.167H.76a.859.859 0 0 0-.53.167C.083.437.009.57.009.722v1.375c0 .153.074.285.223.396a.859.859 0 0 0 .53.167h8.495Z" fill="#C5C6EF"/></svg></div>
                         </div>
                     </div>
                     <div className='content-box'>
@@ -194,7 +194,10 @@ const Main = () => {
                         setDivClassName({...divClassName, [activeInput.edit]:'displayed'})
                         setDisplayStateEdit( {...displayStateEdit, [activeInput.edit]:'notDisplayed'})
                         setDisplayState({...displayState, [activeInput.reply]:'notDisplayed'})
-                        setDeleteId(id)}
+                        setDeleteId(id)
+                        document.querySelector(`.comment .form${activeInput.edit}`).removeAttribute('autofocus', '')
+                        document.querySelector(`.comment .form${activeInput.reply}`).removeAttribute('autofocus', '')
+                        }
                         } 
                         data-toggle="modal" data-target="#modal" className='delete'> 
                         <span><svg width="12" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M1.167 12.448c0 .854.7 1.552 1.555 1.552h6.222c.856 0 1.556-.698 1.556-1.552V3.5H1.167v8.948Zm10.5-11.281H8.75L7.773 0h-3.88l-.976 1.167H0v1.166h11.667V1.167Z" fill="#ED6368"/></svg></span>
@@ -226,11 +229,11 @@ const Main = () => {
         let repliedUsername = ''
         const style = {
             visibility: 'hidden', 
-            height: '30px',
+            height: '40px',
             width: '100%',
             display: 'block'
         }
-
+        const classname = 'form' + id + ' ' +displayStateEdit[id]
         if (x){      
             repliedUsername = '@' + parentUsername + ' '
             if (content.substring(1, (parentUsername.length+1)) === parentUsername){
@@ -241,7 +244,7 @@ const Main = () => {
             return(
                 <div className='comment'>
                     <div className={divClassName[id]}><span className="blueBold">{repliedUsername}</span>{newContent}<div style={style}></div></div>
-                    <form style={{marginBottom: '80px'}} className={displayStateEdit[id]} onSubmit={(e) => {
+                    <form style={{marginBottom: '80px'}} className={classname} onSubmit={(e) => {
                         e.preventDefault()
                         editComment(id)
                     }}>
@@ -342,8 +345,10 @@ const Main = () => {
         setDisplayState({...displayState, [activeInput.reply]: 'notDisplayed'})
         //setDivClassName({...divClassName, [activeInput.reply]: 'displayed'})
         if (activeInput.edit !== id && activeInput.edit !== null){
+            document.querySelector(`.comment .form${activeInput.edit}`).removeAttribute('autofocus', '')
             setDisplayStateEdit({...displayStateEdit, [id]: states, [activeInput.edit]: 'notDisplayed'})            
         }
+        document.querySelector(`.comment .form${id}`).setAttribute('autofocus', '')
         setActiveInput({...activeInput, 'edit': id})
     }
 
@@ -411,14 +416,14 @@ const Main = () => {
     localStorage.setItem('data', JSON.stringify(data))
     return(
         <div className='main'>
-               <div className='content-container'>{data.comments.map((item, index) => (fullComment(item, index)))}</div> 
+                {data.comments.map((item, index) => (fullComment(item, index)))}
                <div className='currentUser-form-box'> 
                 <form className='currentUser-form' onSubmit={(e) => {
                     e.preventDefault()
                     currentUserReplyForm()
                 }}>
                     <span ><img src={data.currentUser.image.png} alt='your profile picture'/></span>
-                    <textarea rows='4' cols='80' onChange={settingcurrentUserInputValue} value={currentUserInputValue} placeholder='Add a comment'></textarea>
+                    <textarea autoFocus rows='4' cols='80' onChange={settingcurrentUserInputValue} value={currentUserInputValue} placeholder='Add a comment'></textarea>
                     <div></div>
                     <input type='submit' value='send'/>
                 </form>
@@ -447,3 +452,5 @@ const Main = () => {
     )
 }
 export default Main;
+//so work on the autofocus thing cuz it doesnt work
+//use jquery

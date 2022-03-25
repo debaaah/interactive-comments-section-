@@ -29,27 +29,23 @@ body{
 }
 .score-box{
     background-color: #f4f5fb;
-    -webkit-writing-mode: vertical-rl;
-    writing-mode: vertical-rl;
-    -webkit-text-orientation: upright;
-    text-orientation: upright;
     border-radius: 5px;
-    padding: 0 2px 2px; 
+    padding: 2px 3px 3px; 
     margin-right: 17px;
-    span{
-        writing-mode: horizontal-tb;
-        text-orientation: mixed;
+    div{
         padding: 3px 5px;
+        text-align: center;
     }
     .score{
         font-size: 14px;
         color: $blue;
         font-weight: bold;
     }
-
+    .plus, .minus{
+        padding-right: 4px;
+    }
     .minus{
-        padding-right: 0.5px !important;
-        padding-top: 1px !important;
+        padding-top: 0;
     }
 }
 img{ 
@@ -238,20 +234,18 @@ textarea{
         padding-left: 0px;
     }
     .score-box{
-        -webkit-writing-mode: horizontal-tb;
-        writing-mode: horizontal-tb;
-        -webkit-text-orientation: mixed;
-        text-orientation: mixed;
         width: max-content;
         margin-right: 0px;
+        display: flex;
 
-        span{
-            padding: 5px 7px;
+        div{
+            padding: 5px 10px;
         }
-
+        .plus{
+            padding-top: 2px;
+        }
         .minus{
-            padding-right: 7px !important; 
-            padding-top: 5px !important;
+            padding-top: 3px;
         }
 
 
