@@ -8,7 +8,8 @@ body{
     background-color: $bg;
 }
 .main{
-    margin-bottom: 157px;
+    max-width: 1200px;
+    margin: auto auto 157px;
 }
 .blueBold{
     color: $blue;
@@ -144,6 +145,8 @@ textarea:hover, [type='submit']:hover, .plus:hover, .minus:hover{
     padding-bottom: 5px;
     width: -webkit-fill-available;
     background-color: $bg;
+    max-width: 1200px;
+    margin: auto;
 }
 .currentUser-form{
     display: flex;
