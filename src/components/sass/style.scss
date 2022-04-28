@@ -8,7 +8,8 @@ body{
     background-color: $bg;
 }
 .main{
-    max-width: 1200px;
+    width: 90vw;
+    max-width:700px;  
     margin: auto auto 157px;
 }
 .blueBold{
@@ -70,7 +71,7 @@ img{
 .notDisplayed{
     display: none;
 }
-textarea:hover, [type='submit']:hover, .plus:hover, .minus:hover{
+textarea:hover, [type='submit']:hover, .plus:hover, .minus:hover, .edit, .delete{
     cursor: pointer;
 }
 .plus:hover, .minus:hover{
@@ -145,7 +146,8 @@ textarea:hover, [type='submit']:hover, .plus:hover, .minus:hover{
     padding-bottom: 5px;
     width: -webkit-fill-available;
     background-color: $bg;
-    max-width: 1200px;
+    width: 90vw;
+    max-width:700px;  
     margin: auto;
 }
 .currentUser-form{

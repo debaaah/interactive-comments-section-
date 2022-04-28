@@ -148,7 +148,7 @@ const Main = () => {
     //checks if the comment has replies, if yes, it calls a function that handles/display the reply
     const ifReply = (replies, parentUsername, parentIndex) => {
         if (replies){
-       // console.log('parent', parentUsername , parentIndex)
+        console.log('parent', parentUsername , parentIndex)
         return(
                 <div>
                     {replies.map((item, index) => (reply(item, parentUsername, parentIndex, index)))}
@@ -156,7 +156,7 @@ const Main = () => {
         )
         }
     }
-  //  console.log(parentUsername.current)
+    console.log(parentUsername.current)
     console.log(data)
     //this is form that pops up whenever a user clicks reply, it's display is set to none and it is attached at the botttom of every comment
     const inputBox = (id, repliedUser, parentIndex) => {
@@ -325,7 +325,7 @@ const Main = () => {
    
      //same as full comment function, the only diffrence is that it doesnt have a reply box
      const reply = (item, parentUsername, parentIndex, index) => {
-      //  console.log('reply', parentUsername, parentIndex)
+        console.log('reply', parentUsername, parentIndex)
         const {content, createdAt, id, replies, score, user} = item
         return(
             <div id={id}>
@@ -336,7 +336,38 @@ const Main = () => {
         )
     }
     //creats an object w the replies and pushes it to the data array.
-
+    const replyForm = (id, repliedUser, parentIndex) => {
+        const newInput = {
+            content: inputValue,
+            createdAt: Date.now(),
+            id: latestId + 1,
+            replyingTo: repliedUser,
+            score: 0,
+            user: { 
+                image:{
+                    "png": "./images/avatars/image-juliusomo.png",
+                    "webp": "./images/avatars/image-juliusomo.webp"
+            },
+                username: data.currentUser.username
+            }
+        }
+        const replyReply = (item) => {
+            item.map((index) => {
+                    if(parentIndex = index){
+                        data.comments[parentIndex].replies.push(newInput)
+                    }else if (item.replies ){replyReply(item.replies)}
+                })}
+        data.comments.map((item, index) => {
+            if(parentIndex = index){
+                data.comments[parentIndex].replies.push(newInput)
+            }else if (item.replies ){replyReply(item.replies)}
+        })
+        
+        setDisplayState({...displayState, [newInput.id]: 'notDisplayed', [id]: 'notDisplayed'})
+        setDisplayStateEdit({...displayStateEdit, [newInput.id]: 'notDisplayed', [id]: 'notDisplayed'})
+        setLatestId(newInput.id)
+        setData({...data})
+    }
 
     //to delete comments
     const deleteComment = (id) => {
@@ -385,38 +416,7 @@ const Main = () => {
         setInputValue('@' + repliedUser + ' ')
         //parentUsername.current = repliedUser
     }
-       const replyForm = (id, repliedUser, parentIndex) => {
-        const newInput = {
-            content: inputValue,
-            createdAt: Date.now(),
-            id: latestId + 1,
-            replyingTo: repliedUser,
-            score: 0,
-            user: { 
-                image:{
-                    "png": "./images/avatars/image-juliusomo.png",
-                    "webp": "./images/avatars/image-juliusomo.webp"
-            },
-                username: data.currentUser.username
-            }
-        }
-        const replyReply = (item) => {
-            item.map((index) => {
-                    if(parentIndex === index){
-                        data.comments[parentIndex].replies.push(newInput)
-                    }else if (item.replies ){replyReply(item.replies)}
-                })}
-        data.comments.map((item, index) => {
-            if(parentIndex === index){
-                data.comments[parentIndex].replies.push(newInput)
-            }else if (item.replies ){replyReply(item.replies)}
-        })
-        
-        setDisplayState({...displayState, [newInput.id]: 'notDisplayed', [id]: 'notDisplayed'})
-        setDisplayStateEdit({...displayStateEdit, [newInput.id]: 'notDisplayed', [id]: 'notDisplayed'})
-        setLatestId(newInput.id)
-        setData({...data})
-    }
+   
     const currentUserReplyForm = () =>{
        // const date = dateConverter(( Date.now() - currentDate.current)/1000)
         if (currentUserInputValue){
