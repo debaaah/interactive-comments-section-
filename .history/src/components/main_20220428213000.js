@@ -98,21 +98,7 @@ const Main = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [editContent, setEditContent] = useState(""); //holds the currently edited value
 
-  const resetting = () => {
-    setDivClassName({
-      ...divClassName,
-      [activeInput.edit]: "displayed",
-    });
-    setDisplayStateEdit({
-      ...displayStateEdit,
-      [activeInput.edit]: "notDisplayed",
-    });
-    setDisplayState({
-      ...displayState,
-      [activeInput.reply]: "notDisplayed",
-    });
-  }
-   //this is form that pops up whenever a user clicks reply, it's display is set to none and it is attached at the botttom of every comment
+  //this is form that pops up whenever a user clicks reply, it's display is set to none and it is attached at the botttom of every comment
   const inputBox = (id, repliedUser, parentIndex) => {
     const classname =
       "currentUserReply-form form" + id + " " + displayState[id];
@@ -129,7 +115,7 @@ const Main = () => {
         </span>
         <textarea
           rows="3"
-          cols="65"
+          cols="80"
           onChange={settingInputValue}
           value={inputValue}
         ></textarea>
@@ -200,7 +186,7 @@ const Main = () => {
       }
     });
   };
-//console.log('diveclassname', divClassName, 'displaystate', displayState, 'displaystateedit', displayStateEdit, 'activeinput', activeInput)
+
   //checks the username, id and content of the sender. performs some actions if the current user is the sender and if the current user is not the sender
   const sentWho = (username, id = null, content = null) => {
     if (data.currentUser.username === username && id === null) {
@@ -210,7 +196,18 @@ const Main = () => {
         <div className="edit-area">
           <div
             onClick={() => {
-            resetting()
+              setDivClassName({
+                ...divClassName,
+                [activeInput.edit]: "displayed",
+              });
+              setDisplayStateEdit({
+                ...displayStateEdit,
+                [activeInput.edit]: "notDisplayed",
+              });
+              setDisplayState({
+                ...displayState,
+                [activeInput.reply]: "notDisplayed",
+              });
               setDeleteId(id);
             }}
             data-toggle="modal"
@@ -272,6 +269,7 @@ const Main = () => {
       parentUsername.current = parents;
     }
 
+    console.log(content);
     let newContent = content;
     let repliedUsername = "";
     const style = {
@@ -283,8 +281,6 @@ const Main = () => {
     const classname = "form" + id + " " + displayStateEdit[id];
     if (x) {
       repliedUsername = "@" + replyingTo + " ";
-
-      // console.log('else', content.substring(1, (replyingTo.length+1)) , replyingTo)
       if (
         content.substring(1, parentUsername.current.length + 1) ===
         parentUsername.current
@@ -293,13 +289,7 @@ const Main = () => {
           parentUsername.current.length + 1,
           content.length + 1
         );
-        //    console.log('new', newContent, 'old', content)
-      } else if (content.substring(1, replyingTo.length + 1) === replyingTo) {
-        //   console.log( replyingTo )
-        newContent = content.substring(
-          replyingTo.length + 1,
-          content.length + 1
-        );
+        console.log(newContent);
       }
     }
     if (data.currentUser.username === username) {
@@ -320,7 +310,8 @@ const Main = () => {
           >
             <textarea
               rows="4"
-              cols="65"
+              cols="80"
+              type="text"
               value={editContent}
               onChange={settingEditContent}
             ></textarea>
@@ -447,21 +438,17 @@ const Main = () => {
   //onclick edit, this function makes the orignal comment not displayed,
   //
   const settingDisplayState2 = (id, states, content) => {
+    setDivClassName({ ...divClassName, [id]: "notDisplayed" });
     setEditContent(content);
     setDisplayStateEdit({ ...displayStateEdit, [id]: states });
     setDisplayState({ ...displayState, [activeInput.reply]: "notDisplayed" });
     //setDivClassName({...divClassName, [activeInput.reply]: 'displayed'})
     if (activeInput.edit !== id && activeInput.edit !== null) {
-    //  console.log('here')
       setDisplayStateEdit({
         ...displayStateEdit,
         [id]: states,
         [activeInput.edit]: "notDisplayed",
       });
-      setDivClassName({...divClassName, [activeInput.edit]: 'displayed',  [id]: "notDisplayed"})
-    }else{
-
-    setDivClassName({ ...divClassName, [id]: "notDisplayed" });
     }
     setActiveInput({ ...activeInput, edit: id });
   };
@@ -656,7 +643,6 @@ const Main = () => {
           className="currentUser-form"
           onSubmit={(e) => {
             e.preventDefault();
-
             currentUserReplyForm();
           }}
         >
@@ -666,10 +652,7 @@ const Main = () => {
           <textarea
             rows="4"
             cols="80"
-            onFocus={()=>
-              resetting()}
-            onChange={ (e) => {
-              settingcurrentUserInputValue(e)}}
+            onChange={settingcurrentUserInputValue}
             value={currentUserInputValue}
             placeholder="Add a comment"
           ></textarea>
@@ -679,9 +662,9 @@ const Main = () => {
       </div>
       <div
         className="modal fade"
-        id="deletion-confirmation"
+        id="modal"
         tabIndex="-1"
-        aria-labelledby="deletion-confirmation"
+        aria-labelledby="preview of restaurant prompt"
         aria-hidden="true"
       >
         <div className="modal-dialog">

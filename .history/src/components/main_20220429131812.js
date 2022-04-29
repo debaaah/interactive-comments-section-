@@ -200,7 +200,7 @@ const Main = () => {
       }
     });
   };
-//console.log('diveclassname', divClassName, 'displaystate', displayState, 'displaystateedit', displayStateEdit, 'activeinput', activeInput)
+console.log('diveclassname', divClassName, 'displaystate', displayState, 'displaystateedit', displayStateEdit, 'activeinput', activeInput)
   //checks the username, id and content of the sender. performs some actions if the current user is the sender and if the current user is not the sender
   const sentWho = (username, id = null, content = null) => {
     if (data.currentUser.username === username && id === null) {
@@ -321,6 +321,7 @@ const Main = () => {
             <textarea
               rows="4"
               cols="65"
+              type="text"
               value={editContent}
               onChange={settingEditContent}
             ></textarea>
@@ -447,21 +448,19 @@ const Main = () => {
   //onclick edit, this function makes the orignal comment not displayed,
   //
   const settingDisplayState2 = (id, states, content) => {
+    setDivClassName({ ...divClassName, [id]: "notDisplayed" });
     setEditContent(content);
     setDisplayStateEdit({ ...displayStateEdit, [id]: states });
     setDisplayState({ ...displayState, [activeInput.reply]: "notDisplayed" });
     //setDivClassName({...divClassName, [activeInput.reply]: 'displayed'})
     if (activeInput.edit !== id && activeInput.edit !== null) {
-    //  console.log('here')
+      console.log('here')
       setDisplayStateEdit({
         ...displayStateEdit,
         [id]: states,
         [activeInput.edit]: "notDisplayed",
       });
-      setDivClassName({...divClassName, [activeInput.edit]: 'displayed',  [id]: "notDisplayed"})
-    }else{
-
-    setDivClassName({ ...divClassName, [id]: "notDisplayed" });
+      setDivClassName({...divClassName, [activeInput.edit]: 'displayed'})
     }
     setActiveInput({ ...activeInput, edit: id });
   };
@@ -666,9 +665,8 @@ const Main = () => {
           <textarea
             rows="4"
             cols="80"
-            onFocus={()=>
-              resetting()}
             onChange={ (e) => {
+              resetting()
               settingcurrentUserInputValue(e)}}
             value={currentUserInputValue}
             placeholder="Add a comment"
@@ -679,9 +677,9 @@ const Main = () => {
       </div>
       <div
         className="modal fade"
-        id="deletion-confirmation"
+        id="modal"
         tabIndex="-1"
-        aria-labelledby="deletion-confirmation"
+        aria-labelledby="preview of restaurant prompt"
         aria-hidden="true"
       >
         <div className="modal-dialog">

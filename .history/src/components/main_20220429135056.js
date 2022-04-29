@@ -679,9 +679,9 @@ const Main = () => {
       </div>
       <div
         className="modal fade"
-        id="deletion-confirmation"
+        id="modal"
         tabIndex="-1"
-        aria-labelledby="deletion-confirmation"
+        aria-labelledby="preview of restaurant prompt"
         aria-hidden="true"
       >
         <div className="modal-dialog">

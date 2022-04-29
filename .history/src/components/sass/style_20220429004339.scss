@@ -1,0 +1,308 @@
+$blue: hsl(238, 40%, 52%);//#5a5da6;
+$blueish: hsl(239, 57%, 85%);//#c4c5ec;
+$red:  hsl(358, 79%, 66%);//#ED6368;
+$reddish: hsl(357, 100%, 86%);//#f4bbc0;
+$bg: #f4f6f9;
+
+
+body{
+    background-color: $bg;
+}
+.main{
+    width: 90vw;
+    max-width:700px;  
+    margin: auto auto 157px;
+}
+.blueBold{
+    color: $blue;
+    font-weight: bold;
+}
+.comment-box{
+    display: flex;
+    background-color: white;
+    padding: 18px;
+    border-radius: 7px;
+    margin: 15px 10px;
+    height: max-content;
+}
+.reply-box{
+    margin: 5px 0px 5px 30px;
+    padding-left: 30px;
+    border-left: 1px solid #ebecef;
+}
+.score-box{
+    background-color: #f4f5fb;
+    border-radius: 5px;
+    padding: 2px 3px 3px; 
+    margin-right: 17px;
+    div{
+        padding: 3px 5px;
+        text-align: center;
+    }
+    .score{
+        font-size: 14px;
+        color: $blue;
+        font-weight: bold;
+    }
+    .plus, .minus{
+        padding-right: 4px;
+    }
+    .minus{
+        padding-top: 0;
+    }
+}
+img{ 
+    width: 30px;
+}
+[type='submit']{
+    background-color: $blue;
+    width: 90px;
+    height: 42px;
+    border: 0;
+    border-radius: 7px;
+    color: white;
+    text-transform: uppercase;
+}
+.displayed{
+    display: flex;
+}
+.comment .displayed{
+    display: block;
+}
+.notDisplayed{
+    display: none;
+}
+textarea:hover, [type='submit']:hover, .plus:hover, .minus:hover, .edit, .delete{
+    cursor: pointer;
+}
+.plus:hover, .minus:hover{
+    path{
+        fill: $blue ;
+    }
+}
+.content-box{
+    width: 100%;
+
+    .details{
+        display: flex;
+        justify-content: space-between;
+
+        .commentator {
+            .username, .time{
+                padding: 0 10px;
+            }
+            .blue{
+                background-color: $blue;
+                padding: 1px 5px;
+                border-radius: 3px;
+                color: white;
+            }
+        }
+        .edit-area {
+            display: flex;
+
+            div{
+                margin-left: 18px;
+            }
+            
+            span{
+                padding: 4px;
+                text-transform: capitalize;
+            }
+            svg{
+                position: relative;
+                top: -2px;
+            }
+            .edit span:nth-child(2), .reply{
+                color: $blue
+            }
+            .delete{
+                span:nth-child(2){
+                    color: $red
+                }
+                &:hover{
+                    span path{
+                        fill: $reddish;
+                    }
+                    span:nth-child(2){
+                        color: $reddish
+                    }
+                }
+            }
+            .edit:hover, .reply:hover{
+                span path{
+                    fill: $blueish;
+                }
+                span:nth-child(2){
+                    color: $blueish
+                }
+            }
+        }
+}
+}
+
+.currentUser-form-box{
+    position: fixed;
+    bottom: 0px;
+    padding-bottom: 5px;
+    width: -webkit-fill-available;
+    background-color: $bg;
+    width: 90vw;
+    max-width:700px;  
+    margin: auto;
+}
+.currentUser-form{
+    display: flex;
+    max-height: 110px;
+}
+.currentUserReply-form, .currentUser-form{
+    background-color: white;
+    padding: 18px;
+    border-radius: 7px;
+    margin: 15px 10px;
+    justify-content: space-between;
+    div{
+        height: 0px;
+    }
+    span{
+        position: relative;
+        top: 5px;
+    }
+}
+
+textarea{
+    resize: none;
+    padding: 10px;
+    border-radius: 7px;
+    width: -webkit-fill-available;
+
+    &, input{
+        margin: 0 15px;
+    }
+}
+
+.comment{
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+    form{
+        input{
+            float: right;
+        }
+
+        textarea{
+            margin-right: 0;
+        }
+    }
+}
+
+.modal{
+    padding-right: 0 !important;
+    
+    .modal-content{
+        padding: 10px;
+    }
+    .modal-dialog{
+        min-width: 290px;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%) !important;
+        transform: translate(-50%, -50%) !important;
+        position: fixed;
+    }
+    
+    .modal-footer{
+        border-top: 0;
+        justify-content: space-around;
+        
+        .btn{
+            width: 150px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            height: auto;
+        }
+        [type='button']{
+            background-color: $blue;
+        }
+        [type='submit']{
+            background-color: $red;
+        }
+        .btn:hover, .btn{
+            color: white;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .main {
+        margin-bottom: 191px;
+    }
+    .reply-box{
+        margin: 0 0 0 10px;
+        padding-left: 0px;
+    }
+    .score-box{
+        width: max-content;
+        margin-right: 0px;
+        display: flex;
+
+        div{
+            padding: 5px 10px;
+        }
+        .plus{
+            padding-top: 2px;
+        }
+        .minus{
+            padding-top: 3px;
+        }
+
+
+    }
+    .comment-box{
+        position: relative;
+
+    }
+    .score-box-box{
+        position: absolute;
+        bottom: 10px;
+    }
+    .edit-area{
+        position: absolute;
+        right: 18px;
+        bottom: 15px;
+    }
+    .displayed, .currentUser-form{
+        display: block;
+    }
+    .currentUser-form{
+         max-height: 150px;
+    }
+    .currentUserReply-form, .currentUser-form{
+        position: relative;
+        div{
+            height: 43px;
+        }
+        span{
+            position: static;
+        }
+        img{
+            position: absolute;
+            bottom: 15px;
+        }
+        textarea{
+            margin: 0;
+            height: 70px;
+        }
+        input{
+            position: absolute;
+            bottom: 10px;
+            right: 18px;
+        }
+}
+    .modal{
+        .modal-footer{
+            .btn{
+                font-size: 15px;
+                width: auto;
+            }
+        }
+    }
+}

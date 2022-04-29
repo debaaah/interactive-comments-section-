@@ -39,7 +39,7 @@ body {
   border-left: 1px solid #ebecef;
 }
 .score-box {
-  background-color: $Verylightgray;//#f4f5fb;
+  background-color: #f4f5fb;
   border-radius: 5px;
   padding: 2px 3px 3px;
   margin-right: 17px;
@@ -71,9 +71,6 @@ img {
   border-radius: 7px;
   color: white;
   text-transform: uppercase;
-  &:hover{
-    background-color: $blueish;
-}
 }
 .displayed {
   display: flex;
@@ -94,7 +91,6 @@ textarea:hover,
 .edit,
 .delete {
   cursor: pointer;
-
 }
 .plus:hover,
 .minus:hover {
@@ -127,7 +123,7 @@ textarea:hover,
     }
     .edit-area {
       display: flex;
-      font-weight: 500;
+      font-weight: 400;
 
       div {
         margin-left: 18px;
@@ -219,12 +215,10 @@ textarea {
   form {
     input {
       float: right;
-   
     }
 
     textarea {
       margin-right: 0;
-      width: 97%;
     }
   }
 }
@@ -256,10 +250,6 @@ textarea {
     }
     [type="button"] {
       background-color: $blue;
-
-      &:hover{
-          background-color: $blueish;
-      }
     }
     [type="submit"] {
       background-color: $red;
@@ -295,11 +285,6 @@ textarea {
   }
   .comment-box {
     position: relative;
-    .content-box{
-      .details{
-        margin-bottom: 15px;
-      }
-    }
   }
   .score-box-box {
     position: absolute;
@@ -348,30 +333,4 @@ textarea {
       }
     }
   }
-}
-@media screen and (max-width: 375px){
-.comment-box{
-  .content-box{
-    .details{
-      font-size: 14px;
-      img{
-        width: 25px;
-      }
-      .username, .time{
-      padding: 0 5px;
-      }
-      .blue{
-        padding: 1px 3px;
-      }
-    }
-    .edit-area{
-      div{
-        margin-left: 7px;
-      }
-      span{
-        padding: 4px 2px;
-      }
-    }
-  }
-}
 }
